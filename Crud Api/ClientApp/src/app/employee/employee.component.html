@@ -1,0 +1,136 @@
+<div class="container  border">
+  <form [formGroup]="employeeForm" >
+    <div class="mb-3">
+      <label>Name</label>
+      <input type="text" formControlName="Name" class="form-control" id="exampleInputName1" aria-describedby="nameHelp" placeholder="enter name" [ngClass]="{ 'is-invalid':  f.Name.touched && f.Name.errors}">
+      <div *ngIf="f.Name.touched && f.Name.errors" class="invalid-feedback">
+        <div *ngIf="f.Name.errors.required"> Name is required</div>
+      </div>
+    </div>
+    <!--|| submitted && f.Name.errors-->
+
+    <div class="mb-3 ">
+      <label>Contact</label>
+      <input type="text" formControlName="Contact" class="form-control" id="exampleInputContact1" aria-describedby="contactHelp" placeholder="enter contact" [ngClass]="{ 'is-invalid': f.Contact.touched && f.Contact.errors }">
+      <div *ngIf="f.Contact.touched && f.Contact.errors" class="invalid-feedback">
+        <div *ngIf="f.Contact.errors.required">Contact is required</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" formControlName="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter email" [ngClass]="{ 'is-invalid':   f.Email.touched && f.Email.errors }" >
+      <div *ngIf="f.Email.touched && f.Email.errors" class="invalid-feedback">
+        <div *ngIf="f.Email.errors.required">Email must be a valid email address</div>
+      </div>
+    </div>
+
+    <div class="mb-3 ">
+      <label>Date of Joining</label>
+      <input type="date" value="today| date:'dd/M/yy'}" formControlName="DOJ" class="form-control" id="exampleInputDOJ1" aria-describedby="dojHelp" [ngClass]="{ 'is-invalid':  f.DOJ.touched && f.DOJ.errors}" >
+      <div *ngIf="f.DOJ.touched && f.DOJ.errors" class="invalid-feedback">
+        <div *ngIf="f.DOJ.errors.required">Date is required</div>
+      </div>
+    </div>
+
+
+    <div class="mb-3">
+      <div class="form-group">
+
+        <label for="City">City</label>
+        <select formControlName="City" class="form-control" id="City" [ngClass]="{ 'is-invalid':   f.City.touched && f.City.errors }" >
+          <option>Lahore</option>
+          <option>Islamabad</option>
+          <option>Karachi</option>
+          <option>Gujranwala</option>
+          <option>Sialkot</option>
+        </select>
+      </div>
+
+
+    </div>
+    <div class="mb-3 ">
+      <label>Gender</label>
+      <div class="mb-3 ">
+        <label>
+          <input type="radio" formControlName="Gender" value="Male" />Male
+        </label>
+        &nbsp;
+        <label>
+          <input type="radio" formControlName="Gender" value="Female"  />Female
+        </label>
+      </div>
+    </div>
+    <!--[disabled]="!employee.invalid"-->
+    <button type="submit" mat-flat-button class="btn btn-light" (click)="addEmployee()">Submit</button>
+    <button type="submit" mat-flat-button class="btn btn-light" (click)="updateEmployee()">Update</button>
+    <!-- <button type="submit" mat-flat-button class="btn btn-light" (click)="encryptData()">Encrypt</button>
+    &nbsp;
+    <button type="submit" mat-flat-button class="btn btn-light" (click)="  decryptData()">Decrypt</button> -->
+  </form>
+</div>
+
+
+<div *ngIf="service.v" class=" container"> 
+<div class="var">
+  <h3>Encrypted Request</h3><br />
+  {{service.v}}
+</div>
+</div>
+
+<div *ngIf="service.r" class=" container"> 
+  <div class="res">
+    <h3>Response</h3><br />
+    {{service.r}}
+  </div>
+</div>
+
+<!--table-->
+
+<div class="container">
+  <div class="mb-3">
+    <table class="table" border="1">
+      <thead>
+        <tr>
+          <th scope="col">Sr.no</th>
+          
+          <th scope="col">Employee Name</th>
+          <th scope="col">Employee Contact</th>
+          <th scope="col">Employee Email</th>
+          <th scope="col">Date of Joining</th>
+          <th scope="col">Gender</th>
+          <th scope="col">City</th>
+          <th scope="col">Action</th>
+         
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listdata;  let i =index">
+          <td><span>{{i}}</span></td>
+         
+          <td><span>{{item.Name}}</span></td>
+          <td><span>{{item.Contact}}</span></td>
+          <td><span>{{item.Email}}</span></td>
+          <td><span>{{item.DOJ}}</span></td>
+          <td><span>{{item.Gender}}</span></td>
+          <td><span>{{item.City}}</span></td>
+
+
+          <!--<td> <button class="btn btn-danger" type="button" (click)="deleteFieldValue(i)">Delete</button></td>-->
+          <td>
+            <button mat-fab type="button" class="btn btn-secondary" (click)="populateForm(item ,i)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            &nbsp;
+            <button mat-fab type="button" class="btn btn-danger" (click)="deleteEmployee(i)"> 
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+
+      </tbody>
+
+
+    </table>
+  </div>
+</div>
